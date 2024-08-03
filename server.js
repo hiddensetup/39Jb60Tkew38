@@ -7,34 +7,33 @@ const { sendNotification } = require('./notificationService');
 
 const app = express();
 const port = 3000;
+const DATA_FILE = path.join(__dirname, 'data.json');
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const DATA_FILE = path.join(__dirname, 'data.json');
-
+// Ensure data file exists
 const initializeDataFile = () => {
   if (!fs.existsSync(DATA_FILE)) {
     fs.writeFileSync(DATA_FILE, JSON.stringify({ users: [] }, null, 2));
   }
 };
 
+// Read and write data
 const readDataFile = () => {
   initializeDataFile();
-  const rawData = fs.readFileSync(DATA_FILE);
-  return JSON.parse(rawData);
+  return JSON.parse(fs.readFileSync(DATA_FILE));
 };
 
 const writeDataFile = (data) => {
   fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 };
 
+// Register device
 app.post('/registerDevice', (req, res) => {
   const { deviceId, deptNumber } = req.body;
 
-  if (!deviceId || !deptNumber) {
-    return res.status(400).send('Device ID and Department Number are required');
-  }
+  if (!deviceId || !deptNumber) return res.status(400).send('Device ID and Department Number are required');
 
   const data = readDataFile();
   let user = data.users.find(u => u.deptNumber === deptNumber);
@@ -44,8 +43,7 @@ app.post('/registerDevice', (req, res) => {
     data.users.push(user);
   }
 
-  const existingDevice = user.devices.find(d => d.deviceId === deviceId);
-  if (!existingDevice) {
+  if (!user.devices.find(d => d.deviceId === deviceId)) {
     user.devices.push({ deviceId, dateAdded: new Date().toISOString() });
     writeDataFile(data);
   }
@@ -54,79 +52,44 @@ app.post('/registerDevice', (req, res) => {
   res.send({ status: 'Device registered successfully' });
 });
 
-app.post('/sendNotification', (req, res) => {
+// Send notifications
+app.post('/sendNotification', async (req, res) => {
   const { message, deptNumbers } = req.body;
 
-  if (!message || !deptNumbers || !Array.isArray(deptNumbers)) {
-    return res.status(400).send('Message and Department Numbers are required');
-  }
+  if (!message || !Array.isArray(deptNumbers)) return res.status(400).send('Message and Department Numbers are required');
 
   const data = readDataFile();
   const notifications = [];
 
-  deptNumbers.forEach(deptNumber => {
+  for (const deptNumber of deptNumbers) {
     const user = data.users.find(u => u.deptNumber === deptNumber);
-
     if (user) {
       notifications.push(user);
-      sendNotification(message)
-        .then(response => {
-          user.notifications.push({ message, dateSent: new Date().toISOString() });
-          writeDataFile(data);
-          console.log(`Notification sent to ${deptNumber}:`, response);
-        })
-        .catch(error => {
-          console.error(`Failed to send notification to ${deptNumber}:`, error.response ? error.response.data : error.message);
-        });
+      try {
+        await sendNotification(message);
+        user.notifications.push({ message, dateSent: new Date().toISOString() });
+        writeDataFile(data);
+        console.log(`Notification sent to ${deptNumber}`);
+      } catch (error) {
+        console.error(`Failed to send notification to ${deptNumber}:`, error.message);
+      }
     }
-  });
-
-  if (notifications.length > 0) {
-    res.send('Notifications sent successfully!');
-  } else {
-    res.status(404).send('No valid departments found');
   }
+
+  notifications.length > 0 ? res.send('Notifications sent successfully!') : res.status(404).send('No valid departments found');
 });
 
+// Serve data
 app.get('/data', (req, res) => {
   try {
-    const data = readDataFile();
-    res.json(data);
+    res.json(readDataFile());
   } catch (error) {
     console.error('Failed to read data file:', error);
     res.status(500).send('Failed to load data.');
   }
 });
 
-
-app.get('/sendNotification', (req, res) => {
-  const { message, deptNumber } = req.query;
-
-  if (!message || !deptNumber) {
-    return res.status(400).send('Message and Department Number are required');
-  }
-
-  const data = readDataFile();
-  const user = data.users.find(u => u.deptNumber === deptNumber);
-
-  if (!user) {
-    return res.status(404).send('User not found');
-  }
-
-  sendNotification(message)
-    .then(response => {
-      user.notifications.push({ message, dateSent: new Date().toISOString() });
-      writeDataFile(data);
-
-      console.log('Notification sent successfully:', response);
-      res.send('Notification sent successfully!');
-    })
-    .catch(error => {
-      console.error('Failed to send notification:', error.response ? error.response.data : error.message);
-      res.status(500).send('Failed to send notification.');
-    });
-});
-
+// Start server
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server running at http://localhost:${port}`);
 });
