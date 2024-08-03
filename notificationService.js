@@ -11,6 +11,7 @@ function sendNotification(message) {
       notification: {
         title: 'Notification',
         body: message,
+        icon: 'https://routin.cloud/favicon.png'
       },
     },
   });

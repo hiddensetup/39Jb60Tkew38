@@ -3,59 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Notifier</title>
+    <title>Device Registration</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/app.js" defer></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
+    <script src="js/app.js" defer></script>
 </head>
 <body>
     <div class="container mt-5">
-        <h1>Task Notifier</h1>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#messageModal">
-            Select Message
-        </button>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="messageModalLabel">Select a Message</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="messageForm">
-                        <div class="form-group">
-                            <label for="messageSelect">Message</label>
-                            <select class="form-control" id="messageSelect">
-                                <option value="Hello, world!">Hello, world!</option>
-                                <option value="Task completed">Task completed</option>
-                                <option value="New task assigned">New task assigned</option>
-                            </select>
-                        </div>
-                        <button type="button" class="btn btn-primary" id="sendMessageButton">Send Message</button>
-                    </form>
-                </div>
+        <h1>Register Device</h1>
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="floorInput">Floor</label>
+                <input type="text" class="form-control" id="floorInput" placeholder="Enter floor">
             </div>
-        </div>
+            <div class="form-group">
+                <label for="deptInput">Department</label>
+                <input type="text" class="form-control" id="deptInput" placeholder="Enter department">
+            </div>
+            <button type="button" class="btn btn-primary" id="registerButton">Register</button>
+        </form>
     </div>
     <script>
-        const beamsClient = new PusherPushNotifications.Client({
-          instanceId: 'cc4fa519-f5d8-4ac5-a880-63e1f791f695',
+        document.getElementById('registerButton').addEventListener('click', async function() {
+            const floor = document.getElementById('floorInput').value;
+            const dept = document.getElementById('deptInput').value;
+            const deptNumber = `${floor} ${dept}`;
+
+            const beamsClient = new PusherPushNotifications.Client({
+                instanceId: 'cc4fa519-f5d8-4ac5-a880-63e1f791f695',
+            });
+
+            try {
+                await beamsClient.start();
+                await beamsClient.addDeviceInterest('hello');
+                const deviceId = await beamsClient.getDeviceId();
+
+                const response = await fetch('/registerDevice', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ deviceId, deptNumber }),
+                });
+
+                const data = await response.json();
+                console.log('Device registered:', data);
+                alert('Device registered successfully');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to register device.');
+            }
         });
-      
-        beamsClient.start()
-          .then(() => beamsClient.addDeviceInterest('hello'))
-          .then(() => console.log('Successfully registered and subscribed!'))
-          .catch(console.error);
     </script>
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
