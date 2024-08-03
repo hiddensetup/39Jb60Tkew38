@@ -1,22 +1,26 @@
 const express = require('express');
 const router = express.Router();
+const dataService = require('./dataService');
 
-// In-memory store for device tokens (for demo purposes)
-let deviceTokens = []; 
+router.post('/', (req, res) => {
+  const { deviceId, deptNumber } = req.body;
 
-// Endpoint to register device tokens
-router.post('/registerDevice', (req, res) => {
-  const { deviceId } = req.body;
+  if (!deviceId || !deptNumber) return res.status(400).send('Device ID and Department Number are required');
 
-  if (!deviceId) {
-    return res.status(400).send('Device ID is required');
+  const data = dataService.readDataFile();
+  let user = data.users.find(u => u.deptNumber === deptNumber);
+
+  if (!user) {
+    user = { deptNumber, devices: [], notifications: [] };
+    data.users.push(user);
   }
 
-  // Save deviceId to the in-memory store
-  deviceTokens.push(deviceId);
-  console.log('Device ID stored:', deviceId);
+  if (!user.devices.find(d => d.deviceId === deviceId)) {
+    user.devices.push({ deviceId, dateAdded: new Date().toISOString() });
+    dataService.writeDataFile(data);
+  }
 
-  // Respond with success
+  console.log('Device ID stored:', deviceId);
   res.send({ status: 'Device registered successfully' });
 });
 

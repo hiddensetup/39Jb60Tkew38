@@ -1,22 +1,32 @@
-const PushNotifications = require('@pusher/push-notifications-server');
+const express = require('express');
+const router = express.Router();
+const { sendNotification } = require('./notificationService');
+const dataService = require('./dataService');
 
-// Ensure to use environment variables here as well
-const beamsClient = new PushNotifications({
-  instanceId: process.env.BEAMS_INSTANCE_ID,
-  secretKey: process.env.BEAMS_SECRET_KEY,
+router.post('/', async (req, res) => {
+  const { message, deptNumbers } = req.body;
+
+  if (!message || !Array.isArray(deptNumbers)) return res.status(400).send('Message and Department Numbers are required');
+
+  const data = dataService.readDataFile();
+  const notifications = [];
+
+  for (const deptNumber of deptNumbers) {
+    const user = data.users.find(u => u.deptNumber === deptNumber);
+    if (user) {
+      notifications.push(user);
+      try {
+        await sendNotification(message);
+        user.notifications.push({ message, dateSent: new Date().toISOString() });
+        dataService.writeDataFile(data);
+        console.log(`Notification sent to ${deptNumber}`);
+      } catch (error) {
+        console.error(`Failed to send notification to ${deptNumber}:`, error.message);
+      }
+    }
+  }
+
+  notifications.length > 0 ? res.send('Notifications sent successfully!') : res.status(404).send('No valid departments found');
 });
 
-beamsClient.publishToInterests(['hello'], {
-  web: {
-    notification: {
-      title: 'Hello',
-      body: 'Hello, World!',
-    },
-  },
-})
-.then(response => {
-  console.log('Notification sent successfully:', response);
-})
-.catch(error => {
-  console.error('Failed to send notification:', error);
-});
+module.exports = router;
