@@ -3,15 +3,17 @@ const router = express.Router();
 const dataService = require('./dataService');
 
 router.post('/', (req, res) => {
-  const { deviceId, deptNumber } = req.body;
+  const { deviceId, floorNumber, department } = req.body;
 
-  if (!deviceId || !deptNumber) return res.status(400).send('Device ID and Department Number are required');
+  if (!deviceId || !floorNumber || !department) {
+    return res.status(400).send('Device ID, Floor Number, and Department are required');
+  }
 
   const data = dataService.readDataFile();
-  let user = data.users.find(u => u.deptNumber === deptNumber);
+  let user = data.users.find(u => u.floorNumber === floorNumber && u.department === department);
 
   if (!user) {
-    user = { deptNumber, devices: [], notifications: [] };
+    user = { floorNumber, department, devices: [], notifications: [] };
     data.users.push(user);
   }
 

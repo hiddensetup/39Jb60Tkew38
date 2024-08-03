@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sendMessageButton = document.getElementById('sendMessageButton');
 
   // Function to handle device registration
-  const registerDevice = async (floor, dept) => {
-    const deptNumber = `${floor} ${dept}`;
+  const registerDevice = async (floorNumber, department) => {
     const beamsClient = new PusherPushNotifications.Client({ instanceId: 'cc4fa519-f5d8-4ac5-a880-63e1f791f695' });
 
     try {
@@ -15,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch('/registerDevice', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ deviceId, deptNumber }),
+        body: JSON.stringify({ deviceId, floorNumber, department }),
       });
 
       const data = await response.json();
@@ -31,17 +30,19 @@ document.addEventListener('DOMContentLoaded', () => {
   if (registerForm) {
     registerForm.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const floor = document.getElementById('floorInput').value;
-      const dept = document.getElementById('deptInput').value;
-      await registerDevice(floor, dept);
+      const floorNumber = document.getElementById('floorInput').value;
+      const department = document.getElementById('departmentInput').value;
+      await registerDevice(floorNumber, department);
     });
   }
 
   // Function to handle notification sending
-  const sendNotification = async (message, deptNumber) => {
+  const sendNotification = async (message, deptNumbers) => {
     try {
-      const response = await fetch(`/sendNotification?message=${encodeURIComponent(message)}&deptNumber=${encodeURIComponent(deptNumber)}`, {
-        method: 'GET',
+      const response = await fetch('/sendNotification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, deptNumbers }),
       });
 
       const data = await response.text();
@@ -57,13 +58,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (sendMessageButton) {
     sendMessageButton.addEventListener('click', async () => {
       const selectedMessage = document.getElementById('messageSelect').value;
-      const deptNumber = document.getElementById('deptNumberInput')?.value;
+      const selectedCheckboxes = document.querySelectorAll('.deptCheckbox:checked');
+      const selectedDeptNumbers = Array.from(selectedCheckboxes).map(cb => JSON.parse(cb.value));
 
-      if (deptNumber) {
-        await sendNotification(selectedMessage, deptNumber);
-      } else {
-        alert('Please enter a department number.');
+      if (selectedDeptNumbers.length === 0) {
+        alert('Please select at least one department.');
+        return;
       }
+
+      await sendNotification(selectedMessage, selectedDeptNumbers);
     });
   }
 });
