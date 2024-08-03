@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sendMessageButton = document.getElementById('sendMessageButton');
 
   if (registerForm) {
+    // Only attach the event listener once
     registerForm.addEventListener('submit', async function(event) {
       event.preventDefault();
       const floor = document.getElementById('floorInput').value;
@@ -37,22 +38,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (sendMessageButton) {
+    // Only attach the event listener once
     sendMessageButton.addEventListener('click', async function() {
       const selectedMessage = document.getElementById('messageSelect').value;
       const deptNumber = document.getElementById('deptNumberInput').value;
 
-      try {
-        const response = await fetch(`/sendNotification?message=${encodeURIComponent(selectedMessage)}&deptNumber=${encodeURIComponent(deptNumber)}`, {
-          method: 'GET',
-        });
-
-        const data = await response.text();
-        console.log(data);
-        alert('Notification sent successfully');
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to send message.');
-      }
+      await sendBrowserMessage(selectedMessage, deptNumber);
     });
   }
 });
+
+// Function to send messages
+async function sendBrowserMessage(message, deptNumber) {
+  try {
+    const response = await fetch(`/sendNotification?message=${encodeURIComponent(message)}&deptNumber=${encodeURIComponent(deptNumber)}`, {
+      method: 'GET',
+    });
+
+    const data = await response.text();
+    console.log(data);
+    alert('Notification sent successfully');
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Failed to send message.');
+  }
+}
