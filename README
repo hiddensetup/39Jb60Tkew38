@@ -1,0 +1,10 @@
+dependencies
+
+npm install @pusher/push-notifications-server
+npm install dotenv
+npm install express
+
+.env file creation
+
+BEAMS_INSTANCE_ID=
+BEAMS_SECRET_KEY=
