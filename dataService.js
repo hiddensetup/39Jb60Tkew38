@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 const DATA_FILE = path.join(__dirname, 'data.json');
 
 const initializeDataFile = () => {
@@ -26,4 +27,4 @@ const serveData = (req, res) => {
   }
 };
 
-module.exports = { readDataFile, writeDataFile, serveData };
+module.exports = { readDataFile, writeDataFile, serveData, uuidv4 };

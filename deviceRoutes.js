@@ -13,7 +13,13 @@ router.post('/', (req, res) => {
   let user = data.users.find(u => u.floorNumber === floorNumber && u.department === department);
 
   if (!user) {
-    user = { floorNumber, department, devices: [], notifications: [] };
+    user = {
+      uuid: dataService.uuidv4(),
+      floorNumber,
+      department,
+      devices: [],
+      notifications: []
+    };
     data.users.push(user);
   }
 
