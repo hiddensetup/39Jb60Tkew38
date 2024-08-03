@@ -12,10 +12,6 @@
         <h1>Send Notification</h1>
         <form id="messageForm">
             <div class="form-group">
-                <label for="deptNumberInput">Department Number</label>
-                <input type="text" class="form-control" id="deptNumberInput" placeholder="Enter department number">
-            </div>
-            <div class="form-group">
                 <label for="messageSelect">Message</label>
                 <select class="form-control" id="messageSelect">
                     <option value="Hello, world!">Hello, world!</option>
@@ -23,27 +19,67 @@
                     <option value="New task assigned">New task assigned</option>
                 </select>
             </div>
-            <button type="button" class="btn btn-primary" id="sendMessageButton">Send Message</button>
+            <div id="departmentsContainer"></div>
+            <button type="button" class="btn btn-primary mt-3" id="sendMessageButton">Send Message</button>
         </form>
     </div>
     <script src="js/app.js" defer></script>
     <script>
-        document.getElementById('sendMessageButton').addEventListener('click', async function() {
-            const selectedMessage = document.getElementById('messageSelect').value;
-            const deptNumber = document.getElementById('deptNumberInput').value;
-
+        document.addEventListener('DOMContentLoaded', async () => {
             try {
-                const response = await fetch(`/sendNotification?message=${encodeURIComponent(selectedMessage)}&deptNumber=${encodeURIComponent(deptNumber)}`, {
-                    method: 'GET',
-                });
+                const response = await fetch('/data');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
 
-                const data = await response.text();
-                console.log(data);
-                alert('Notification sent successfully');
+                const container = document.getElementById('departmentsContainer');
+                container.innerHTML = '';
+
+                data.users.forEach(user => {
+                    const deptNumber = user.deptNumber;
+                    const cardHtml = `
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">${deptNumber}</h5>
+                                <input type="checkbox" class="deptCheckbox" value="${deptNumber}"> Select
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += cardHtml;
+                });
             } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to send message.');
+                console.error('Error fetching departments:', error);
+                alert('Failed to load departments.');
             }
+
+            document.getElementById('sendMessageButton').addEventListener('click', async () => {
+                const selectedMessage = document.getElementById('messageSelect').value;
+                const selectedCheckboxes = document.querySelectorAll('.deptCheckbox:checked');
+                const selectedDeptNumbers = Array.from(selectedCheckboxes).map(cb => cb.value);
+
+                if (selectedDeptNumbers.length === 0) {
+                    alert('Please select at least one department.');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/sendNotification', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ message: selectedMessage, deptNumbers: selectedDeptNumbers }),
+                    });
+
+                    const data = await response.text();
+                    console.log(data);
+                    alert('Notification sent successfully');
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Failed to send message.');
+                }
+            });
         });
     </script>
 </body>

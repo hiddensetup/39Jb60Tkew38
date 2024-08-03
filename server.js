@@ -55,32 +55,49 @@ app.post('/registerDevice', (req, res) => {
 });
 
 app.post('/sendNotification', (req, res) => {
-  const { message, deptNumber } = req.body;
+  const { message, deptNumbers } = req.body;
 
-  if (!message || !deptNumber) {
-    return res.status(400).send('Message and Department Number are required');
+  if (!message || !deptNumbers || !Array.isArray(deptNumbers)) {
+    return res.status(400).send('Message and Department Numbers are required');
   }
 
   const data = readDataFile();
-  const user = data.users.find(u => u.deptNumber === deptNumber);
+  const notifications = [];
 
-  if (!user) {
-    return res.status(404).send('User not found');
+  deptNumbers.forEach(deptNumber => {
+    const user = data.users.find(u => u.deptNumber === deptNumber);
+
+    if (user) {
+      notifications.push(user);
+      sendNotification(message)
+        .then(response => {
+          user.notifications.push({ message, dateSent: new Date().toISOString() });
+          writeDataFile(data);
+          console.log(`Notification sent to ${deptNumber}:`, response);
+        })
+        .catch(error => {
+          console.error(`Failed to send notification to ${deptNumber}:`, error.response ? error.response.data : error.message);
+        });
+    }
+  });
+
+  if (notifications.length > 0) {
+    res.send('Notifications sent successfully!');
+  } else {
+    res.status(404).send('No valid departments found');
   }
-
-  sendNotification(message)
-    .then(response => {
-      user.notifications.push({ message, dateSent: new Date().toISOString() });
-      writeDataFile(data);
-
-      console.log('Notification sent successfully:', response);
-      res.send('Notification sent successfully!');
-    })
-    .catch(error => {
-      console.error('Failed to send notification:', error.response ? error.response.data : error.message);
-      res.status(500).send('Failed to send notification.');
-    });
 });
+
+app.get('/data', (req, res) => {
+  try {
+    const data = readDataFile();
+    res.json(data);
+  } catch (error) {
+    console.error('Failed to read data file:', error);
+    res.status(500).send('Failed to load data.');
+  }
+});
+
 
 app.get('/sendNotification', (req, res) => {
   const { message, deptNumber } = req.query;
