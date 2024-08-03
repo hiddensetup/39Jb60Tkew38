@@ -19,6 +19,14 @@ app.use('/data', (req, res) => dataService.serveData(req, res));
 app.use('/registerDevice', deviceRoutes);
 app.use('/sendNotification', notificationRoutes);
 
+// Route handlers for HTML files without extension
+const pages = ['index', 'register', 'sender', 'board'];
+pages.forEach(page => {
+  app.get(`/${page}`, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', `${page}.html`));
+  });
+});
+
 // Start server
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server running at http://localhost:${port}`);

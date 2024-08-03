@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Register Device</h1>
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="floorInput">Floor Number</label>
+                <input type="text" class="form-control" id="floorInput" placeholder="Enter floor number">
+            </div>
+            <div class="form-group">
+                <label for="departmentInput">Department</label>
+                <input type="text" class="form-control" id="departmentInput" placeholder="Enter department">
+            </div>
+            <button type="button" class="btn btn-primary" id="registerButton">Register</button>
+        </form>
+    </div>
+    <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(error => {
+              console.error('Service Worker registration failed:', error);
+            });
+        }
+      </script>
+      
+    <script>
+        document.getElementById('registerButton').addEventListener('click', async function() {
+            const floor = document.getElementById('floorInput').value;
+            const department = document.getElementById('departmentInput').value;
+            const deptNumber = { floorNumber: floor, department };
+
+            const beamsClient = new PusherPushNotifications.Client({
+                instanceId: 'cc4fa519-f5d8-4ac5-a880-63e1f791f695',
+            });
+
+            try {
+                await beamsClient.start();
+                await beamsClient.addDeviceInterest('hello');
+                const deviceId = await beamsClient.getDeviceId();
+
+                const response = await fetch('/registerDevice', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ deviceId, ...deptNumber }),
+                });
+
+                const data = await response.json();
+                console.log('Device registered:', data);
+                alert('Device registered successfully');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to register device.');
+            }
+        });
+    </script>
+</body>
+</html>

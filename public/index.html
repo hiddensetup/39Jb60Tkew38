@@ -3,67 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Device Registration</title>
+    <title>Welcome to Routin.cloud</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
-    <script src="js/app.js" defer></script>
 </head>
 <body>
     <div class="container mt-5">
-        <h1>Register Device</h1>
-        <form id="registerForm">
-            <div class="form-group">
-                <label for="floorInput">Floor Number</label>
-                <input type="text" class="form-control" id="floorInput" placeholder="Enter floor number">
-            </div>
-            <div class="form-group">
-                <label for="departmentInput">Department</label>
-                <input type="text" class="form-control" id="departmentInput" placeholder="Enter department">
-            </div>
-            <button type="button" class="btn btn-primary" id="registerButton">Register</button>
-        </form>
+        <h1>Welcome to Routin.cloud</h1>
+        <div class="mt-4">
+            <h2>How to register?</h2>
+            <ol>
+                <li>Go to <a href="/register">register</a> and enter your floor number and department letter.</li>
+                <li>Submit and accept incoming notifications.</li>
+            </ol>
+            <p>You can add all devices you want to receive notifications.</p>
+        </div>
+        <div class="mt-4">
+            <h2>How to check notifications sent?</h2>
+            <ol>
+                <li>Go to <a href="/board">board</a> page.</li>
+                <li>Search notifications messages using filters.</li>
+            </ol>
+        </div>
+        <div class="mt-4">
+            <h2>Who can send messages?</h2>
+            <p>Anyone with permission to send messages can send messages anonymously (no one will know who sent the message). We don't store personal information because the platform is designed to send notifications to departments.</p>
+        </div>
+        <div class="mt-4">
+            <h2>Can users send messages?</h2>
+            <p>Yes, anyone can send massive notifications to a specific floor, or to a specific floor and department from the <a href="/sender">sender</a> page without exposing personal data.</p>
+        </div>
+        <div class="mt-4">
+            <h2>Can we send files?</h2>
+            <p>Still not supported.</p>
+        </div>
+        <div class="mt-4">
+            <h2>Create Sender Username</h2>
+            <form id="createUsernameForm">
+                <div class="form-group">
+                    <label for="usernameInput">Username</label>
+                    <input type="text" class="form-control" id="usernameInput" placeholder="Enter your username">
+                </div>
+                <button type="button" class="btn btn-primary" id="createUsernameButton">Create Username</button>
+            </form>
+        </div>
     </div>
     <script>
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-              console.log('Service Worker registered with scope:', registration.scope);
-            })
-            .catch(error => {
-              console.error('Service Worker registration failed:', error);
-            });
-        }
-      </script>
-      
-    <script>
-        document.getElementById('registerButton').addEventListener('click', async function() {
-            const floor = document.getElementById('floorInput').value;
-            const department = document.getElementById('departmentInput').value;
-            const deptNumber = { floorNumber: floor, department };
-
-            const beamsClient = new PusherPushNotifications.Client({
-                instanceId: 'cc4fa519-f5d8-4ac5-a880-63e1f791f695',
-            });
-
-            try {
-                await beamsClient.start();
-                await beamsClient.addDeviceInterest('hello');
-                const deviceId = await beamsClient.getDeviceId();
-
-                const response = await fetch('/registerDevice', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ deviceId, ...deptNumber }),
-                });
-
-                const data = await response.json();
-                console.log('Device registered:', data);
-                alert('Device registered successfully');
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to register device.');
+        document.getElementById('createUsernameButton').addEventListener('click', function() {
+            const username = document.getElementById('usernameInput').value;
+            if (username) {
+                localStorage.setItem('senderUsername', username);
+                alert('Username created successfully. You can now access the sender page.');
+            } else {
+                alert('Please enter a username.');
             }
         });
     </script>
