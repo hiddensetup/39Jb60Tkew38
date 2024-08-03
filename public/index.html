@@ -24,6 +24,18 @@
         </form>
     </div>
     <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(error => {
+              console.error('Service Worker registration failed:', error);
+            });
+        }
+      </script>
+      
+    <script>
         document.getElementById('registerButton').addEventListener('click', async function() {
             const floor = document.getElementById('floorInput').value;
             const department = document.getElementById('departmentInput').value;

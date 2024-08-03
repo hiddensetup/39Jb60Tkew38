@@ -5,13 +5,15 @@ const beamsClient = new PushNotifications({
   secretKey: process.env.BEAMS_SECRET_KEY,
 });
 
-function sendNotification(message) {
+function sendNotification(message, url = '/') {
   return beamsClient.publishToInterests(['hello'], {
     web: {
       notification: {
         title: 'Notification',
         body: message,
-        icon: 'https://routin.cloud/favicon.png'
+        icon: 'https://routin.cloud/favicon.png',
+        // Add the URL where you want users to be redirected
+        data: { url }
       },
     },
   });

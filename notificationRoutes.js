@@ -4,7 +4,7 @@ const { sendNotification } = require('./notificationService');
 const dataService = require('./dataService');
 
 router.post('/', async (req, res) => {
-  const { message, deptNumbers } = req.body;
+  const { message, deptNumbers, url } = req.body;
 
   if (!message || !Array.isArray(deptNumbers)) {
     return res.status(400).send('Message and Department Numbers are required');
@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     if (user) {
       notifications.push(user);
       try {
-        await sendNotification(message);
+        await sendNotification(message, url); // Pass URL here
         user.notifications.push({ message, dateSent: new Date().toISOString() });
         dataService.writeDataFile(data);
         console.log(`Notification sent to ${floorNumber} - ${department}`);
