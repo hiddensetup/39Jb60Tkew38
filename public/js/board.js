@@ -97,11 +97,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const floors = [...new Set(data.users.map((user) => user.floorNumber))];
       dropdownMenu.innerHTML += `
-                <li><a class="dropdown-item" href="#" data-floor="">All Floors</a></li>
+                <li><a class="dropdown-item" href="#" data-floor="">Todos</a></li>
                 ${floors
                   .map(
                     (floor) =>
-                      `<li><a class="dropdown-item" href="#" data-floor="${floor}">${floor}</a></li>`
+                      `<li><a class="dropdown-item" href="#" data-floor="${floor}">Piso ${floor}</a></li>`
                   )
                   .join("")}
             `;
@@ -150,13 +150,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   toggleViewButton.addEventListener("click", () => {
     displayAll = !displayAll;
-    toggleViewButton.textContent = displayAll ? "Latest 10" : "Show All";
+    toggleViewButton.textContent = displayAll ? "Últimos" : "Ver todo";
     updateNotifications();
   });
 
   toggleSortButton.addEventListener("click", () => {
     sortAsc = !sortAsc;
-    toggleSortButton.textContent = sortAsc ? "Sort Desc" : "Sort Asc";
+    toggleSortButton.innerHTML = sortAsc ? "Orden <i class=\"bi bi-arrow-down\"></i>" : "Orden <i class=\"bi bi-arrow-up\"></i>";
     updateNotifications();
   });
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es_US">
 
 <head>
     <meta charset="UTF-8">
@@ -17,7 +17,7 @@
 
 <body>
     <!-- Toast Container -->
-    <div class="toast-container m-2 top-0 end-0 position-absolute">
+    <div class="toast-container m-0 top-0 end-0 position-absolute">
         <!-- Toasts will be dynamically added here -->
     </div>
 
@@ -62,7 +62,7 @@
         <h1>Registrar Dispositivo</h1>
         <form id="registerForm">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floorInput" placeholder="Enter floor number">
+                <input type="number" class="form-control" id="floorInput" placeholder="Enter floor number">
                 <label for="floorInput"># Piso</label>
             </div>
             <div class="form-floating mb-3">
@@ -82,117 +82,16 @@
     </div>
 
     <footer class="w-100 position-absolute bottom-0 bg-light text-center py-3 mt-auto">
-        <p class="small mb-0 text-muted">&copy; 2024 Routin.cloud. Todos los derechos reservados.</p>
+        <p class="small mb-0 text-muted">&copy; 2024 Routin.cloud.</p>
     </footer>
 
     <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(registration => {
-                    console.log('Service Worker registered with scope:', registration.scope);
-                })
-                .catch(error => {
-                    console.error('Service Worker registration failed:', error);
-                });
-        }
-
-        document.getElementById('registerButton').addEventListener('click', async function () {
-            let floor = document.getElementById('floorInput').value.trim();
-            let department = document.getElementById('departmentInput').value.trim().toUpperCase();
-
-            // Clear previous toast messages
-            const toastContainer = document.querySelector(".toast-container");
-            toastContainer.innerHTML = "";
-
-            // Validate floorInput
-            if (!floor || isNaN(floor)) {
-                window.showToast('Please enter a valid floor number.', 'warning');
-                return;
-            }
-
-            floor = parseInt(floor, 10);
-
-            if (floor < 0 || floor > 16) {
-                window.showToast('Floor number must be between 0 and 16.', 'warning');
-                return;
-            }
-
-            // Prefix single digit floor numbers with zero
-            if (floor < 10) {
-                floor = '0' + floor;
-            }
-
-            // Validate departmentInput
-            if (!department || department.length !== 1 || !/[A-Z]/.test(department)) {
-                window.showToast('Please enter a single valid department letter (A-Z).', 'warning');
-                return;
-            }
-
-            const deptNumber = { floorNumber: floor, department };
-
-            const beamsClient = new PusherPushNotifications.Client({
-                instanceId: 'cc4fa519-f5d8-4ac5-a880-63e1f791f695',
-            });
-
-            try {
-                await beamsClient.start();
-                await beamsClient.addDeviceInterest('updates-info');
-                const deviceId = await beamsClient.getDeviceId();
-
-                const response = await fetch('/registerDevice', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ deviceId, ...deptNumber }),
-                });
-
-                const data = await response.json();
-                console.log('Device registered:', data);
-                window.showToast('Device registered successfully', 'success');
-
-                // Clear input fields after successful registration
-                document.getElementById('floorInput').value = '';
-                document.getElementById('departmentInput').value = '';
-
-                // Redirect to /board
-                setTimeout(() => {
-                    window.location.href = '/board';
-                }, 2000); // Redirect after 2 seconds to show the toast
-            } catch (error) {
-                console.error('Error:', error);
-                window.showToast('Failed to register device.', 'danger');
-            }
-        });
-
         // Show the modal on page load
         window.addEventListener('load', () => {
             const infoModal = new bootstrap.Modal(document.getElementById('infoModal'));
             infoModal.show();
         });
-
-        window.showToast = function (message, type = 'info') {
-            const toastContainer = document.querySelector('.toast-container');
-            const toast = document.createElement('div');
-            toast.classList.add('toast', 'align-items-center', 'text-bg-' + type, 'border-0', 'show');
-            toast.setAttribute('role', 'alert');
-            toast.setAttribute('aria-live', 'assertive');
-            toast.setAttribute('aria-atomic', 'true');
-            toast.innerHTML = `
-                <div class="d-flex">
-                    <div class="toast-body">
-                        ${message}
-                    </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>`;
-            toastContainer.appendChild(toast);
-            setTimeout(() => {
-                toast.classList.remove('show');
-                toast.remove();
-            }, 3000);
-        };
     </script>
-
 </body>
 
 </html>

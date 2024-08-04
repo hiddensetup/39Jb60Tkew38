@@ -9,13 +9,16 @@ router.post('/', (req, res) => {
     return res.status(400).send('Device ID, Floor Number, and Department are required');
   }
 
+  // Convert floorNumber to integer
+  const floorNumberInt = parseInt(floorNumber, 10);
+
   const data = dataService.readDataFile();
-  let user = data.users.find(u => u.floorNumber === floorNumber && u.department === department);
+  let user = data.users.find(u => u.floorNumber === floorNumberInt && u.department === department);
 
   if (!user) {
     user = {
       uuid: dataService.uuidv4(),
-      floorNumber,
+      floorNumber: floorNumberInt, // Store as integer
       department,
       devices: [],
       notifications: []

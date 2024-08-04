@@ -22,3 +22,12 @@ body {
 .fs-chat-size {
     font-size: 3rem!important;
 }
+
+#sendMessageButton {
+    scale:1;
+    transition: scale .2s ease
+}
+
+#sendMessageButton:active {
+    scale: 1.05
+}
