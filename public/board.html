@@ -1,57 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notification Board</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+        <script src="js/loader.js" defer></script>
+
+
     <style>
-        .card { margin-bottom: 15px; }
-        .search-bar { margin-bottom: 20px; }
-        .controls { margin-bottom: 20px; }
+        .card {
+            margin-bottom: 15px;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+        }
+
+        .date-time {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .date-time .date {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .date-time .time {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
     </style>
 </head>
+
 <body>
+    <div class="container mx-auto mb-5 mt-2">
+        <ul class="nav nav-underline justify-content-center">
+
+            <li class="nav-item">
+                <a class="nav-link" href="/register">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Board</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/sender">Sender</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" aria-disabled="true">Support</a>
+            </li>
+        </ul>
+    </div>
     <div class="container mt-5">
         <h1>Notification Board</h1>
-        <div class="controls">
-            <input type="text" id="searchInput" class="form-control search-bar" placeholder="Search messages">
-            <button class="btn btn-secondary" id="toggleViewButton">Show All</button>
-            <button class="btn btn-secondary" id="toggleSortButton">Sort Asc</button>
-            <button class="btn btn-secondary" data-toggle="modal" data-target="#dateModal">Search by Date</button>
-            <div>
-                <select id="floorSelect" class="form-control mt-2">
-                    <option value="">All Floors</option>
-                </select>
-                <input type="text" id="departmentInput" class="form-control mt-2" placeholder="Department">
+        <div class="controls text-center">
+            <div class="form-floating">
+                <input type="text" id="searchInput" class="form-control search-bar" placeholder="Search messages">
+                <label for="searchInput">Search messages</label>
+
             </div>
+            <!-- Button Group -->
+            <div class="btn-group mb-3" role="group" aria-label="Notification Controls">
+                <button type="button" class="btn btn-outline-dark" id="toggleViewButton">Show All</button>
+                <button type="button" class="btn btn-outline-dark" id="toggleSortButton">Sort Asc</button>
+                <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Floors
+                </button>
+                <ul class="dropdown-menu">
+                    <!-- generated li tags with floors -->
+                </ul>
+            </div>
+
+
         </div>
         <div id="notificationList"></div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="dateModal" tabindex="-1" role="dialog" aria-labelledby="dateModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="dateModalLabel">Search by Date</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="date" id="dateInput" class="form-control">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="dateSearchButton">Search</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <footer class="w-100 position-relative bottom-0 bg-light text-center py-3 mt-auto">
+        <p class="small mb-0 text-muted">&copy; 2024 Routin.cloud. Todos los derechos reservados.</p>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="js/board.js" defer></script>
 </body>
+
 </html>

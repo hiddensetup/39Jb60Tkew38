@@ -1,0 +1,24 @@
+
+
+body {
+    background: url(/media/body.svg);background-size: contain;background-position: right;
+    height: 100vh;
+}
+.border-custom {
+    border:0.4px solid #ebebeb!important
+}
+
+.form-control:focus,.form-check-input:focus {
+    border-color: #ebebeb!important;
+    box-shadow: 0 0 1px 0.05rem #212529 !important;
+}
+
+.form-check-input:checked {
+    background-color: #212529!important;
+    border-color: #212529!important;
+
+}
+
+.fs-chat-size {
+    font-size: 3rem!important;
+}

@@ -1,0 +1,423 @@
+{
+  "users": [
+    {
+      "uuid": "6ef21b2a-2908-4bd5-9cb8-b8bb2a78bec1",
+      "floorNumber": "3",
+      "department": "a",
+      "devices": [
+        {
+          "deviceId": "web-f90a660f-ffcd-4e22-966a-a3ba2a69d436",
+          "dateAdded": "2024-08-04T00:55:07.265Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Meeting at 3 PM",
+          "dateSent": "2024-08-04T10:00:00.000Z"
+        },
+        {
+          "message": "Reminder: Report submission",
+          "dateSent": "2024-08-04T11:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "96f82f74-a121-4695-8076-fdb1e4f9f452",
+      "floorNumber": "12",
+      "department": "b",
+      "devices": [
+        {
+          "deviceId": "web-e526ef17-a228-4744-a9b9-d2ecfd2fe0f8",
+          "dateAdded": "2024-08-04T01:08:36.143Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Meeting at 3 PM",
+          "dateSent": "2024-08-04T10:15:00.000Z"
+        },
+        {
+          "message": "Lunch break",
+          "dateSent": "2024-08-04T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "b77d1b26-4c73-4c99-8a7d-4a1ae1f941dd",
+      "floorNumber": "3",
+      "department": "c",
+      "devices": [
+        {
+          "deviceId": "web-bfb1a466-457b-4d98-9d38-c3d724db4d68",
+          "dateAdded": "2024-08-04T02:15:20.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Reminder: Report submission",
+          "dateSent": "2024-08-04T11:30:00.000Z"
+        },
+        {
+          "message": "End of day summary",
+          "dateSent": "2024-08-04T17:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "cf9ecb8e-4c4d-4b5b-99a7-2e7e0247582e",
+      "floorNumber": "5",
+      "department": "a",
+      "devices": [
+        {
+          "deviceId": "web-d71d527c-478e-4f5c-b7e3-b5c3b0b6fdd0",
+          "dateAdded": "2024-08-04T03:25:12.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "End of day summary",
+          "dateSent": "2024-08-04T17:15:00.000Z"
+        },
+        {
+          "message": "Meeting at 3 PM",
+          "dateSent": "2024-08-04T18:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "fd84916b-87e2-49d2-8179-d48d74b89cb5",
+      "floorNumber": "8",
+      "department": "b",
+      "devices": [
+        {
+          "deviceId": "web-4e5a6719-5297-4c60-a44f-1e4d758d429d",
+          "dateAdded": "2024-08-04T04:30:45.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Reminder: Report submission",
+          "dateSent": "2024-08-04T11:45:00.000Z"
+        },
+        {
+          "message": "Lunch break",
+          "dateSent": "2024-08-04T12:15:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "4ec6a1d5-018e-4d0d-86ef-594f7a912ce4",
+      "floorNumber": "3",
+      "department": "b",
+      "devices": [
+        {
+          "deviceId": "web-fb236b99-1ac8-462f-a11e-7a214d1e82d8",
+          "dateAdded": "2024-08-04T05:10:30.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Meeting at 3 PM",
+          "dateSent": "2024-08-04T10:45:00.000Z"
+        },
+        {
+          "message": "End of day summary",
+          "dateSent": "2024-08-04T17:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "ce57ed91-23f3-4e2f-9393-43b169f4b8a3",
+      "floorNumber": "12",
+      "department": "c",
+      "devices": [
+        {
+          "deviceId": "web-6234e120-25b2-4ac7-b5bc-34ab8ff08984",
+          "dateAdded": "2024-08-04T06:25:00.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Lunch break",
+          "dateSent": "2024-08-04T12:30:00.000Z"
+        },
+        {
+          "message": "Reminder: Report submission",
+          "dateSent": "2024-08-04T13:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "6e754f69-96d8-4bb7-9110-28cfbc2d6d60",
+      "floorNumber": "8",
+      "department": "a",
+      "devices": [
+        {
+          "deviceId": "web-5f36d1d3-0d1d-4371-989e-1b7c4d1efcb1",
+          "dateAdded": "2024-08-04T07:10:22.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "End of day summary",
+          "dateSent": "2024-08-04T17:45:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "e6c3e6bb-591d-4f26-a9ec-b57b5c8b452e",
+      "floorNumber": "5",
+      "department": "c",
+      "devices": [
+        {
+          "deviceId": "web-43de70c6-f48d-47f6-9b45-709b0c9db7c0",
+          "dateAdded": "2024-08-04T08:20:15.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Meeting at 3 PM",
+          "dateSent": "2024-08-04T18:15:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "e4f3e1d7-4f52-4c6e-853d-f5c842fe07c7",
+      "floorNumber": "12",
+      "department": "a",
+      "devices": [
+        {
+          "deviceId": "web-7c2b79d7-e973-4e72-b6d8-f6e8925de1b4",
+          "dateAdded": "2024-08-04T09:35:00.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Reminder: Report submission",
+          "dateSent": "2024-08-04T11:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "0cf7fc8e-9c9b-4b7e-9820-1eaf6dd6d80c",
+      "floorNumber": "3",
+      "department": "b",
+      "devices": [
+        {
+          "deviceId": "web-8b9a3dfb-52d8-4c3c-9606-08cf93c42d9a",
+          "dateAdded": "2024-08-04T10:50:00.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Lunch break",
+          "dateSent": "2024-08-04T12:45:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "c8e4a535-c2c5-4a7d-ae47-2a0d95e64338",
+      "floorNumber": "8",
+      "department": "b",
+      "devices": [
+        {
+          "deviceId": "web-df3e8d45-7d4d-4d0a-b835-5831f67fa6b4",
+          "dateAdded": "2024-08-04T11:55:00.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Meeting at 3 PM",
+          "dateSent": "2024-08-04T13:15:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "7b1d8516-d9b1-4d39-a946-f36cf5c41a67",
+      "floorNumber": "5",
+      "department": "b",
+      "devices": [
+        {
+          "deviceId": "web-839ffdf5-03eb-4892-9872-dfe14a0ac3a1",
+          "dateAdded": "2024-08-04T12:05:00.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "End of day summary",
+          "dateSent": "2024-08-04T17:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "4e35b79d-4d77-4e3d-a8b0-2d0562a62e6d",
+      "floorNumber": "3",
+      "department": "c",
+      "devices": [
+        {
+          "deviceId": "web-dedb5d7c-b1ec-4d29-a52a-67b6d10c81e1",
+          "dateAdded": "2024-08-04T13:15:00.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Meeting at 3 PM",
+          "dateSent": "2024-08-04T14:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "9f849c14-5b2d-43d2-9d41-26f65f36b71f",
+      "floorNumber": "12",
+      "department": "c",
+      "devices": [
+        {
+          "deviceId": "web-934bd826-166b-469a-bacc-169f22f3e084",
+          "dateAdded": "2024-08-04T14:35:00.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Lunch break",
+          "dateSent": "2024-08-04T15:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "3a5a0cb7-0dce-4b9d-90f3-6a3b2455a3d7",
+      "floorNumber": "8",
+      "department": "c",
+      "devices": [
+        {
+          "deviceId": "web-d48cb08c-9e35-4f8b-9e1d-bb3e38becc68",
+          "dateAdded": "2024-08-04T15:50:00.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "End of day summary",
+          "dateSent": "2024-08-04T18:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "5b81a84c-d6b5-4f0b-b6d5-cb458b46a8c3",
+      "floorNumber": "5",
+      "department": "a",
+      "devices": [
+        {
+          "deviceId": "web-54d26c73-2a59-4c9b-b80c-f08d97b30fc8",
+          "dateAdded": "2024-08-04T16:05:00.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Reminder: Report submission",
+          "dateSent": "2024-08-04T16:45:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "19a6a8a5-2b5f-4b1e-b0cf-383bc9143e1c",
+      "floorNumber": "3",
+      "department": "b",
+      "devices": [
+        {
+          "deviceId": "web-63b38839-3fbd-490e-a1ff-2d5898c0819b",
+          "dateAdded": "2024-08-04T17:20:00.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Lunch break",
+          "dateSent": "2024-08-04T12:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "c8655607-37d3-4d59-b754-7d834c72f785",
+      "floorNumber": "8",
+      "department": "a",
+      "devices": [
+        {
+          "deviceId": "web-ef69e8b6-fc6b-4eae-a5d7-7f0c671a3db4",
+          "dateAdded": "2024-08-04T18:25:00.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Meeting at 3 PM",
+          "dateSent": "2024-08-04T18:35:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "63b3e55f-7a3c-4ecb-aaa7-13dbe6d3b1df",
+      "floorNumber": "12",
+      "department": "b",
+      "devices": [
+        {
+          "deviceId": "web-8470e54b-7616-4e8e-a9f1-9dc34f563d0c",
+          "dateAdded": "2024-08-04T19:00:00.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Reminder: Report submission",
+          "dateSent": "2024-08-04T19:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "d622f4b6-246c-4c9a-8a14-1d57342d43c2",
+      "floorNumber": "5",
+      "department": "a",
+      "devices": [
+        {
+          "deviceId": "web-9f78e24d-e7b5-4c60-87c2-914f4ac7e254",
+          "dateAdded": "2024-08-04T20:10:00.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "End of day summary",
+          "dateSent": "2024-08-04T20:20:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "70fbc4e7-6b83-4b3f-8b2a-dc4b6e4a5562",
+      "floorNumber": "12",
+      "department": "a",
+      "devices": [
+        {
+          "deviceId": "web-856f8d5c-5fa3-44f7-80db-c09f616c08e4",
+          "dateAdded": "2024-08-04T21:15:00.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Meeting at 3 PM",
+          "dateSent": "2024-08-04T21:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "uuid": "8b0e0b6f-0c1d-44d7-9eb2-37d7e1a82b4d",
+      "floorNumber": "8",
+      "department": "b",
+      "devices": [
+        {
+          "deviceId": "web-6c9d7a8b-75e2-4bce-bfe0-9f14e9a0dff8",
+          "dateAdded": "2024-08-04T22:05:00.000Z"
+        }
+      ],
+      "notifications": [
+        {
+          "message": "Reminder: Report submission",
+          "dateSent": "2024-08-04T22:20:00.000Z"
+        }
+      ]
+    }
+  ]
+}

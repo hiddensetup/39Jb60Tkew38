@@ -1,72 +1,84 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const registerForm = document.getElementById('registerForm');
-  const sendMessageButton = document.getElementById('sendMessageButton');
+document.addEventListener("DOMContentLoaded", () => {
+  const sendMessageButton = document.getElementById("sendMessageButton");
 
-  // Function to handle device registration
-  const registerDevice = async (floorNumber, department) => {
-    const beamsClient = new PusherPushNotifications.Client({ instanceId: 'cc4fa519-f5d8-4ac5-a880-63e1f791f695' });
+  // Function to show a toast message
+  window.showToast = (message, type = "success") => {
+    const toastContainer = document.querySelector(".toast-container");
 
-    try {
-      await beamsClient.start();
-      await beamsClient.addDeviceInterest('hello');
-      const deviceId = await beamsClient.getDeviceId();
+    // Create a new toast element
+    const toastHtml = `
+      <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Notification</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          ${message}
+        </div>
+      </div>
+    `;
 
-      const response = await fetch('/registerDevice', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ deviceId, floorNumber, department }),
-      });
+    toastContainer.innerHTML += toastHtml;
 
-      const data = await response.json();
-      console.log('Device registered:', data);
-      alert('Device registered successfully');
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Failed to register device.');
-    }
-  };
+    // Initialize and show the toast
+    const toastElement = toastContainer.lastElementChild;
+    const toast = new bootstrap.Toast(toastElement);
+    toast.show();
 
-  // Device registration form
-  if (registerForm) {
-    registerForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const floorNumber = document.getElementById('floorInput').value;
-      const department = document.getElementById('departmentInput').value;
-      await registerDevice(floorNumber, department);
+    // Remove the toast element after it disappears
+    toastElement.addEventListener("hidden.bs.toast", () => {
+      toastElement.remove();
     });
-  }
+  };
 
   // Function to handle notification sending
   const sendNotification = async (message, deptNumbers) => {
     try {
-      const response = await fetch('/sendNotification', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/sendNotification", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message, deptNumbers }),
       });
 
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Network response was not ok: ${errorText}`);
+      }
+
       const data = await response.text();
-      console.log(data);
-      alert('Notification sent successfully');
+      console.log("Response from server:", data);
+      showToast("Notification sent successfully");
     } catch (error) {
-      console.error('Error:', error);
-      alert('Failed to send message.');
+      console.error("Error:", error);
+      showToast("Failed to send message.", "danger");
     }
   };
 
   // Notification sending button
   if (sendMessageButton) {
-    sendMessageButton.addEventListener('click', async () => {
-      const selectedMessage = document.getElementById('messageSelect').value;
-      const selectedCheckboxes = document.querySelectorAll('.deptCheckbox:checked');
-      const selectedDeptNumbers = Array.from(selectedCheckboxes).map(cb => JSON.parse(cb.value));
+    sendMessageButton.addEventListener("click", async () => {
+      const messageInput = document.getElementById("messageInput").value;
+      const selectedDeptCheckboxes = document.querySelectorAll(
+        ".deptCheckbox:checked"
+      );
+      const selectedDeptNumbers = Array.from(selectedDeptCheckboxes).map(
+        (checkbox) => {
+          const dept = JSON.parse(checkbox.value);
+          return {
+            floorNumber: parseInt(dept.floorNumber, 10),
+            department: dept.department,
+          };
+        }
+      );
 
       if (selectedDeptNumbers.length === 0) {
-        alert('Please select at least one department.');
+        showToast("Please select at least one department.", "warning");
         return;
       }
 
-      await sendNotification(selectedMessage, selectedDeptNumbers);
+      const combinedMessage = messageInput;
+
+      await sendNotification(combinedMessage, selectedDeptNumbers);
     });
   }
 });
