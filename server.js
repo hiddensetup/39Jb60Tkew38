@@ -7,7 +7,7 @@ const deviceRoutes = require('./deviceRoutes');
 const notificationRoutes = require('./notificationRoutes');
 
 const app = express();
-const port = 5000;
+const port = 3000;
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
