@@ -47,25 +47,28 @@
     <div class="container mx-auto mb-5 mt-2">
         <ul class="nav nav-underline justify-content-center">
             <li class="nav-item">
-                <a class="nav-link" href="/register">Register</a>
+                <a class="nav-link" href="/register">Registro</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/board">Board</a>
+                <a class="nav-link" href="/board">Mensajes</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Sender</a>
+                <a class="nav-link active" aria-current="page" href="#">Enviar</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link disabled" aria-disabled="true">Support</a>
-            </li>
+            </li> -->
         </ul>
     </div>
     <div class="container mt-5 pb-3 h-100">
-        <h1>Enviar notificaciones</h1>
-        <form id="messageForm">
+        <h1 class="text-center">Enviar mensajes</h1>
+        <div style="cursor:pointer" class="mb-3 alert border-0 rounded-0  p-2 m-0 alert-dismissible text-center fade show" data-bs-dismiss="alert" aria-label="Close" role="alert">
+            
+            <small>Aquí se muestran todos los departamentos registrados y los últimos mensajes enviados. Los mensajes tienen un límite de caracteres. Si el mensaje supera este límite, solo será visible completo en la sección <b>Mensajes</b>. </small>
+        </div>        <form id="messageForm">
             <div class="mb-4">
                 <div class="form-floating">
-                    <textarea class="form-control" id="messageInput" placeholder="Ingresar mensaje" maxlength="70"></textarea>
+                    <textarea class="form-control" id="messageInput" placeholder="Ingresar mensaje" maxlength="400"></textarea>
                     <label for="messageInput" class="form-label">Mensaje</label>
                     <div id="charCount" class="form-text text-end">70 caracteres restantes</div>
                 </div>
@@ -83,13 +86,10 @@
             <div class="d-grid gap-2 d-md-block mb-5">
                 <button type="button"
                     class="p-2 rounded-pill lh-1 fs-chat-size btn-lg z-2 position-fixed bottom-0 end-0 btn btn-dark mb-3 me-3"
-                    id="sendMessageButton"> <i class="bi-chat"></i> </button>
+                    id="sendMessageButton"> <i class="bi-chat-fill"></i> </button>
             </div>
         </form>
     </div>
-    <footer class="w-100 position-relative bottom-0 bg-light text-center py-3 mt-auto">
-        <p class="small mb-0 text-muted">&copy; 2024 Routin.cloud.</p>
-    </footer>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             try {

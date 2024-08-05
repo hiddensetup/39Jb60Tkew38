@@ -52,38 +52,44 @@
         <ul class="nav nav-underline justify-content-center">
 
             <li class="nav-item">
-                <a class="nav-link" href="/register">Register</a>
+                <a class="nav-link" href="/register">Registro</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Board</a>
+                <a class="nav-link active" aria-current="page" href="#">Mensajes</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/sender">Sender</a>
+                <a class="nav-link" href="/sender">Enviar</a>
             </li>
-            <li class="nav-item">
+
+            <!-- <li class="nav-item">
                 <a class="nav-link disabled" aria-disabled="true">Support</a>
-            </li>
+            </li> -->
         </ul>
     </div>
     <div class="container mt-5">
-        <h1>Notification Board</h1>
+        <h1 class="text-center">Mensajes</h1>
+        <div style="cursor:pointer" class="mb-3 alert border-0 rounded-0  p-2 m-0 alert-dismissible text-center fade show" data-bs-dismiss="alert" aria-label="Close" role="alert">
+            
+            <small>Todos los mensajes enviados se almacenan de forma pública y cuentan con filtros de búsqueda.</small>
+        </div>
         <div class="controls text-center">
             <div class="form-floating">
-                <input type="text" id="searchInput" class="form-control search-bar" placeholder="Buscar notificacioness">
-                <label for="searchInput">Buscar notificacioness</label>
+                <input type="text" id="searchInput" class="form-control search-bar" placeholder="Buscar mensajes">
+                <label for="searchInput">Buscar mensajes</label>
 
             </div>
             <!-- Button Group -->
-            <div class="btn-group mb-3" role="group" aria-label="Notification Controls">
-                <button type="button" class="btn btn-outline-dark" id="toggleViewButton">Ver todo</button>
-                <button type="button" class="btn btn-outline-dark" id="toggleSortButton">Orden <i class="bi bi-arrow-up"></i> </button>
-                <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <i class="bi bi-building"></i> Pisos
-                </button>
-                <ul class="dropdown-menu">
-                    <!-- generated li tags with floors -->
-                </ul>
+            <div class="btn-group mb-3 dropdown-center" role="group" aria-label="Notification Controls">
+                <button type="button" class="py-2 btn btn-outline-dark" id="toggleViewButton">Ver todo</button>
+                <button class="py-2 rounded-0 btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="bi bi-building"></i> Pisos
+            </button>
+            <ul class="dropdown-menu">
+                <!-- generated li tags with floors -->
+            </ul>
+
+                <button type="button" class="py-2 btn btn-outline-dark" id="toggleSortButton">Orden <i class="bi bi-arrow-up"></i> </button>
             </div>
 
 

@@ -10,6 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <script src="js/app.js" defer></script>
     <link rel="stylesheet" href="css/style.css">
     <script src="js/loader.js" defer></script>
@@ -28,24 +30,31 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="infoModalLabel">¿Cómo Registrarse?</h5>
+                    <h5 class="modal-title" id="infoModalLabel">Registro de dispositivos</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <ol>
-                        <li class="mb-2"><strong>Escriba el número de piso y letra.</strong> <br>
+                        <li class="mb-2">
+                            <strong>Paso 1:</strong> <br>
+                            Escriba el número de piso.
                         </li>
-                        <li class="mb-2"><strong>Permita recibir notificaciones:</strong> <br>
-                            <p>
-                                La aplicación le pedirá permiso para enviarle notificaciones. Para no dejar de recibirlas puede marcar <code>"Para siempre"</code> Acepte para recibir notificaciones en su teléfono.
-                                <img class="mt-1 rounded-2 img-fluid" src="/media/A2dLmK3zL.png">
-                            </p>
+                        
+                        <li class="mb-2">
+                            <strong>Paso 2:</strong> <br>
+                            Escriba la letra correspondiente.
                         </li>
-                        <li class="mb-2"><strong>¡Listo!</strong> <br>
-                            <p>
-                                Una vez que haya completado estos pasos, comenzará a recibir notificaciones del edificio.
-                            </p>
+                        
+                        <li class="mb-2">
+                            <strong>Paso 3:</strong> <br>
+                            Presione "Registrar" y permita recibir notificaciones.
                         </li>
+                        <li class="mb-2">
+                            <strong>Paso 4:</strong> <br>
+                            Acepte y seleccione <code>"Para siempre"</code> para recibir notificaciones sin interrupciones.
+                            <img class="mt-1 rounded-2 img-fluid" src="/media/A2dLmK3zL.png">
+                        </li>
+
                     </ol>
                 </div>
             </div>
@@ -55,19 +64,23 @@
     <div class="container mx-auto mb-5 mt-2">
         <ul class="nav nav-underline justify-content-center">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Register</a>
+                <a class="nav-link active" aria-current="page" href="#">Registro</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/board">Board</a>
+                <a class="nav-link" href="/board">Mensajes</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Support</a>
-            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link disabled" aria-disabled="true"></a>
+            </li> -->
         </ul>
     </div>
 
     <div class="container mt-5 mb-5">
-        <h1>Registrar Dispositivo</h1>
+        <h1 class="text-center">Registrar Dispositivo</h1>
+        <div style="cursor:pointer" class="mb-3 alert border-0 rounded-0  p-2 m-0 alert-dismissible text-center fade show" data-bs-dismiss="alert" aria-label="Close" role="alert">
+            
+            <small>Puedes registrar PC, Tablet y Celulares.</small>
+        </div>
         <form id="registerForm">
             <div class="form-floating mb-3">
                 <input type="number" class="form-control" id="floorInput" placeholder="Enter floor number">
